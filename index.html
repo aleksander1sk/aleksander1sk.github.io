@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Олександр Салацький — автоматизація CRM, Telegram та AI-асистенти з затвердженням людиною. Інтерактивне демо і кейси.">
+<meta name="description" content="Олександр Салацький — автоматизація CRM, Telegram та AI-асистенти з затвердженням людиною. Full-stack застосунок, оптимізація WordPress, AI-асистенти, інтеграції. Інтерактивне демо і кейси.">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px;font-family:system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Олександр Салацький — автоматизація CRM і AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -90,6 +90,27 @@ textarea{width:100%;min-height:110px;font:14px/1.5 var(--f-body);padding:8px;bor
 .nda{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;gap:12px}
 .nda ul{margin:0;padding-left:18px;display:grid;gap:6px;max-width:70ch}
 footer{color:var(--muted);font-size:14px;display:grid;gap:6px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:grid;gap:4px;align-content:start}
+.stat b{font:500 22px/1.15 var(--f-display);font-variant-numeric:tabular-nums;color:var(--accent)}
+.stat span{font-size:13.5px;color:var(--muted);line-height:1.4}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:-28px}
+.jump a{font:500 14px var(--f-body);color:var(--fg);text-decoration:none;padding:6px 12px;border:1px solid var(--line);border-radius:999px}
+.jump a:hover{border-color:var(--accent);color:var(--accent)}
+.block{display:grid;gap:24px;scroll-margin-top:16px}
+.block-head{display:grid;gap:10px}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.feat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:8px;align-content:start;min-width:0}
+.feat ul{margin:0;padding-left:18px;display:grid;gap:5px;font-size:14.5px}
+.fact{font-size:14.5px;color:var(--muted)}
+.tbl{overflow-x:auto;margin-top:4px}
+table{border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;min-width:380px}
+th,td{text-align:left;padding:6px 14px 6px 0;border-bottom:1px solid var(--line)}
+th{font:500 12px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+td:last-child{color:var(--accent);font-weight:600}
+.also{margin:0;padding-left:18px;display:grid;gap:8px;max-width:75ch;font-size:15px}
+.case dd a{color:var(--accent)}
+code{font:13px var(--f-mono)}
 @keyframes in{from{transform:translateY(4px);opacity:.4}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.msg{animation:none}}
 </style>
@@ -107,7 +128,19 @@ footer{color:var(--muted);font-size:14px;display:grid;gap:6px}
     </div>
   </header>
 
-  <section class="demo" aria-labelledby="demo-h">
+  <section class="stats" aria-label="Результати в цифрах">
+    <div class="stat"><b>47 → 83</b><span>мобільний PageSpeed після оптимізації WordPress-сайту</span></div>
+    <div class="stat"><b>5,8 → 1,1 с</b><span>час відповіді сервера (TTFB) на ключових сторінках</span></div>
+    <div class="stat"><b>0,899 → 0,001</b><span>зсув верстки (CLS) після CLS-фіксів</span></div>
+    <div class="stat"><b>43 → 5 з 84</b><span>пропущених важливих повідомлень після гібридного AI-фільтра</span></div>
+    <div class="stat"><b>3 тижні</b><span>від першого коміту до тестової збірки full-stack застосунку</span></div>
+  </section>
+
+  <nav class="jump" aria-label="Розділи">
+    <a href="#demo">Демо</a><a href="#app">Full-stack застосунок</a><a href="#wp">WordPress</a><a href="#ai">AI з затвердженням</a><a href="#integrations">Інтеграції</a><a href="#data">Дані</a>
+  </nav>
+
+  <section class="demo block" id="demo" aria-labelledby="demo-h">
     <div class="demo-head">
       <div style="display:grid;gap:6px">
         <div class="eyebrow">Інтерактивне демо</div>
@@ -118,7 +151,7 @@ footer{color:var(--muted);font-size:14px;display:grid;gap:6px}
         <button class="tab" role="tab" id="tab-mail" aria-selected="false" data-s="mail">Лист від клієнта</button>
       </div>
     </div>
-    <p class="note">Так працює рішення з кейсу 1. Демо зібране окремо, на вигаданих даних: компанії, люди й номери не справжні. Натискайте кнопки в чаті, праворуч видно, що відбувається в системі.</p>
+    <p class="note">Так працює рішення з кейсу «Inbox CRM у Telegram». Демо зібране окремо, на вигаданих даних: компанії, люди й номери не справжні. Натискайте кнопки в чаті, праворуч видно, що відбувається в системі.</p>
     <div class="stage">
       <div class="chat">
         <div class="chat-top"><div class="ava">AI</div><div><b>Робочий асистент</b><span>бот команди · демо</span></div></div>
@@ -132,54 +165,193 @@ footer{color:var(--muted);font-size:14px;display:grid;gap:6px}
     </div>
   </section>
 
-  <section class="cases" aria-labelledby="cases-h">
-    <div style="display:grid;gap:6px">
-      <div class="eyebrow">Кейси</div>
-      <h2 id="cases-h">Що я будував</h2>
+  <section class="block" id="app" aria-labelledby="app-h">
+    <div class="block-head"><div class="eyebrow">Флагман · full-stack</div>
+      <h2 id="app-h">White-label мобільний застосунок для клієнтів сервісної мережі</h2>
+      <p>Один код на всіх клієнтів бізнесу: брендування з конфігу, окремий піддомен і база на кожного. Облікова система бізнесу — зовнішнє API, в яке застосунок не втручається: уся логіка покупки, оплати й сповіщень живе на власному сервері.</p>
+      <div class="tags"><span>Vue 3</span><span>Ionic</span><span>Capacitor</span><span>TypeScript</span><span>Fastify</span><span>SQLite</span><span>FCM</span><span>Docker</span><span>Caddy</span><span>CI</span></div>
     </div>
+    <div class="features">
+      <div class="feat"><h3>Вхід і акаунт</h3><ul>
+        <li>Одноразовий код по SMS або Viber з автопідстановкою на Android, email і пароль, вхід через Google</li>
+        <li>Біометрія при запуску, перевірка дублів при реєстрації</li>
+        <li>Сімейні картки: одна людина керує замовленнями родини</li>
+        <li>Видалення акаунта у два кроки</li></ul></div>
+      <div class="feat"><h3>Покупка й оплата</h3><ul>
+        <li>Каталог із категоріями, акціями й крос-продажем у кошику</li>
+        <li>Промокоди та списання бонусів через калькулятор облікової системи</li>
+        <li>Онлайн-оплата з підписом на сервері, підтвердження вебхуком і опитуванням статусу</li>
+        <li>Чернетка замовлення, холд на N днів, «оплата на місці», повтор оплати, яка не вдалася</li>
+        <li>Полегшений розрахунок: 9–14 → 4 запити до зовнішнього API</li></ul></div>
+      <div class="feat"><h3>Сповіщення</h3><ul>
+        <li>Пуші про готовність, оплату й нагадування про покинутий кошик (не частіше разу на день)</li>
+        <li>Тихі години, розсилки з адмінки, вхідні в застосунку</li>
+        <li>Фоновий спостерігач за статусами з посторінковим опитуванням API</li></ul></div>
+      <div class="feat"><h3>Документи</h3><ul>
+        <li>Підписання документів у застосунку: ключ пристрою + біометрія, запасний варіант — код по SMS чи email</li>
+        <li>Перевірка ключа пристрою на сервері, штамп підпису в PDF, файл прикріплюється до картки клієнта</li></ul></div>
+      <div class="feat"><h3>Адмінка</h3><ul>
+        <li>Акції, розсилки, категорії каталогу, документи</li>
+        <li>Налаштування під кожного клієнта бізнесу, увімкнення функцій окремо</li></ul></div>
+      <div class="feat"><h3>Інфраструктура й безпека</h3><ul>
+        <li>Docker Compose + Caddy, скрипти оновлення, відкату, бекапу й відновлення з перевіркою</li>
+        <li>CI: демо оновлюється автоматично, бойові середовища — за захищеним тегом</li>
+        <li>Android-збірка однією командою, iOS через хмарну збірку без Mac</li>
+        <li>Перевірка цілісності застосунку, обмеження частоти запитів, маскування персональних даних у логах, політика зберігання даних</li>
+        <li><code>/health</code> і watchdog з алертами в Telegram</li></ul></div>
+    </div>
+    <p class="fact">255 тестових файлів (unit + інтеграційні) і автоматичний UX-обхід у браузері. Розроблено з Claude Code приблизно за три тижні до тестової збірки в магазині застосунків.</p>
+  </section>
+
+  <section class="block" id="wp" aria-labelledby="wp-h">
+    <div class="block-head"><div class="eyebrow">WordPress</div>
+      <h2 id="wp-h">Швидкість, SEO і автоматизація нішевого B2B-сайту</h2></div>
 
     <article class="case">
-      <aside><div class="eyebrow">Кейс 1</div><h3>Inbox CRM у Telegram з AI-виконавцем</h3>
+      <aside><h3>Пришвидшення сайту на shared-хостингу</h3>
+        <div class="tags"><span>PHP mu-plugins</span><span>WP REST</span><span>WebP</span><span>Core Web Vitals</span></div></aside>
+      <dl>
+        <div><dt>Що було не так</dt><dd>Debug-лог на сотню мегабайт писався на кожен запит, тема сипала PHP-попередженнями, плагін перекладу ламав кеш заголовком no-store, а плагін кешування періодично клав Redis.</dd></div>
+        <div><dt>Що зроблено</dt><dd><ul>
+          <li>Серія точкових mu-plugins і сніпетів: preload LCP-зображення, відкладений JS і трекінг, ліниве завантаження reCAPTCHA, розміри зображень, CLS-фікси слайдерів, мініфікація HTML, прибрані зайві стилі.</li>
+          <li>3000+ зображень переведено у WebP з автоматичною підміною.</li>
+          <li>Власний маячок реальних метрик користувачів і моніторинг PageSpeed по 16 сторінках.</li>
+          <li>Окремо записано, що не спрацювало, щоб не повторювати.</li></ul></dd></div>
+        <div><dt>Результат</dt><dd>
+          <div class="tbl"><table>
+            <thead><tr><th>Метрика</th><th>До</th><th>Після</th></tr></thead>
+            <tbody>
+              <tr><td>PageSpeed, мобільний</td><td>47</td><td>83</td></tr>
+              <tr><td>PageSpeed, десктоп</td><td>~70</td><td>97</td></tr>
+              <tr><td>CLS</td><td>0,899</td><td>0,001</td></tr>
+              <tr><td>TTFB, ключові сторінки</td><td>5,76 с · 3,86 с</td><td>1,07 с · 1,19 с</td></tr>
+              <tr><td>LCP, сторінка подій</td><td>5,6 с</td><td>2,9 с</td></tr>
+              <tr><td>INP p75 (реальні користувачі)</td><td>80 мс</td><td>48 мс</td></tr>
+            </tbody></table></div></dd></div>
+      </dl>
+    </article>
+
+    <article class="case">
+      <aside><h3>Щотижневий SEO-аудит з автовиправленням</h3>
+        <div class="tags"><span>Python</span><span>WP REST</span><span>LLM</span><span>Telegram</span></div></aside>
+      <dl>
+        <div><dt>Що робить</dt><dd><ul>
+          <li>Краулер із набором SEO-перевірок запускається щотижня; безпечні виправлення (meta description, SEO title) застосовуються через WP REST, решта сортується в ручну чергу.</li>
+          <li>Масові AI-правки H1, alt, описів і slug — спершу CSV-попередній перегляд (dry-run), очищення відповіді моделі, лише потім запис.</li>
+          <li>Зведення приходить у Telegram і CRM, журнал «до / після» по кожній сторінці.</li></ul></dd></div>
+        <div><dt>Результат</dt><dd>Рутинні SEO-правки виконуються щотижня без ручної роботи, а кожна зміна записується в журнал «до / після».</dd></div>
+      </dl>
+    </article>
+
+    <article class="case">
+      <aside><h3>Контент, калькулятори й вимірювання ефекту</h3>
+        <div class="tags"><span>JS</span><span>Schema.org</span><span>GSC</span><span>GA4</span></div></aside>
+      <dl>
+        <div><dt>Що зроблено</dt><dd><ul>
+          <li>Онлайн-калькулятори як шорткоди; рушій розрахунку на чистому JS, протестований на офіційних прикладах; щомісячне автооновлення коефіцієнтів з бекапом і відкатом.</li>
+          <li>Сторінки авторів зі schema Person/Article, 301-редиректи, IndexNow, оптимізація під Discover.</li>
+          <li>Ефект змін міряється методом «різниця різниць» по GSC і GA4, а не на око.</li></ul></dd></div>
+        <div><dt>Результат</dt><dd>Кліки з пошуку за тиждень +31%, тоді як рік тому в той самий сезон було −25%; Discover — з 1 до 5 189 кліків на тиждень.</dd></div>
+      </dl>
+    </article>
+  </section>
+
+  <section class="block" id="ai" aria-labelledby="ai-h">
+    <div class="block-head"><div class="eyebrow">AI-асистенти</div>
+      <h2 id="ai-h">AI, який готує роботу, а людина затверджує</h2></div>
+
+    <article class="case">
+      <aside><h3>Inbox CRM у Telegram з AI-виконавцем</h3>
         <div class="tags"><span>Bitrix24 REST</span><span>Telegram Bot API</span><span>LLM</span><span>Node.js</span></div></aside>
       <dl>
-        <div><dt>Задача</dt><dd>Задачі, згадки й повідомлення розкидані між CRM, поштою та чатами. Власник пропускає важливе і витрачає час на рутинні відповіді.</dd></div>
-        <div><dt>Що зроблено</dt><dd><ul>
-          <li>Нові задачі, згадки, особисті повідомлення та чати задач із Bitrix24 приходять у Telegram-бота з кнопками дій.</li>
-          <li>Відкладена публікація повідомлень.</li>
-          <li>Черга AI-виконавця: агент готує роботу в ізольованому середовищі, власник переглядає її в боті й затверджує. Без затвердження нічого не надсилається.</li>
-        </ul></dd></div>
-        <div><dt>Для кого</dt><dd>Внутрішній інструмент компанії B2B-послуг.</dd></div>
+        <div><dt>Задача</dt><dd>Задачі, згадки й повідомлення розкидані між CRM, поштою та чатами; власник пропускає важливе.</dd></div>
+        <div><dt>Що зроблено</dt><dd>Усе нове з CRM приходить у бота з кнопками дій, є відкладена публікація. Черга AI-виконавця: агент готує роботу в ізольованому середовищі, власник переглядає й затверджує в боті. Логіку видно в <a href="#demo">демо</a> вище.</dd></div>
       </dl>
     </article>
 
     <article class="case">
-      <aside><div class="eyebrow">Кейс 2</div><h3>Модульний внутрішній портал</h3>
-        <div class="tags"><span>React</span><span>Express</span><span>SQLite</span><span>JWT</span><span>Python</span></div></aside>
+      <aside><h3>Бот-спостерігач за чатами підтримки</h3>
+        <div class="tags"><span>Python</span><span>aiogram</span><span>SQLite</span><span>headless LLM</span></div></aside>
       <dl>
-        <div><dt>Задача</dt><dd>Кілька розрізнених утиліт команди треба було зібрати в одне місце з доступом за ролями.</dd></div>
-        <div><dt>Що зроблено</dt><dd><ul>
-          <li>Портал на React + Express: JWT-авторизація, адмінка з ролями, окрема база для кожного модуля.</li>
-          <li>Маршрутизація пошти в Telegram, дашборди статистики листів, інтеграція з сервісом розсилок.</li>
-          <li>Автоматичний SEO-аудит сайту (Python).</li>
-          <li>Розгортання на власному сервері в приватній мережі: регламентні задачі за розкладом, логування.</li>
-        </ul></dd></div>
+        <div><dt>Що робить</dt><dd><ul>
+          <li>Сортує звернення клієнтів і запускає розслідування в режимі «лише читання»; власник отримує приватний звіт із кнопками.</li>
+          <li>Пересланий у бота текст ніколи не виконується як команда, лише зберігається як матеріал — захист від prompt injection.</li>
+          <li>Новий клієнт підключається кількома рядками конфігу; 39 тестових файлів.</li></ul></dd></div>
       </dl>
     </article>
 
     <article class="case">
-      <aside><div class="eyebrow">Кейс 3</div><h3>Інтеграції та звірка даних у B2B-продукті</h3>
+      <aside><h3>Гібридний фільтр повідомлень з локальною LLM</h3>
+        <div class="tags"><span>Ollama</span><span>Qwen 2.5 3B</span><span>Claude Haiku</span><span>eval</span></div></aside>
+      <dl>
+        <div><dt>Що зроблено</dt><dd>Правила + локальна модель + хмарна модель як запасний крок. Якість перевірено на 178 вручну розмічених повідомленнях.</dd></div>
+        <div><dt>Результат</dt><dd>Пропущених «дійових» повідомлень: 43 з 84 → 5 з 84. Близько 4,5 с на повідомлення, ~$0,011 за хмарний виклик.</dd></div>
+      </dl>
+    </article>
+
+    <ul class="also">
+      <li><b>Щотижневий «пульс» дзвінків:</b> AI-самарі дзвінків збираються через MCP-сервер платформи аналітики, кластеризуються за темами й «критичними» клієнтами (~4%), звіт іде в чат CRM.</li>
+      <li><b>Поштовий MCP для AI-асистента:</b> читання, пошук і чернетки; надсилання лише через чернетку з затвердженням.</li>
+      <li><b>Особиста CRM задач з чатів і зустрічей:</b> FastAPI + Vue, перевірка дублів, запис у корпоративну CRM лише з підтвердженням, 144 тести.</li>
+    </ul>
+  </section>
+
+  <section class="block" id="integrations" aria-labelledby="int-h">
+    <div class="block-head"><div class="eyebrow">Інтеграції</div>
+      <h2 id="int-h">Реклама, сайт, боти й CRM в одному потоці</h2></div>
+
+    <article class="case">
+      <aside><h3>Реєстрація на вебінари: реклама → бот → CRM</h3>
+        <div class="tags"><span>PHP</span><span>WP-cron</span><span>Meta Graph API</span><span>Bot API</span></div></aside>
+      <dl>
+        <div><dt>Що робить</dt><dd><ul>
+          <li>Ліди з рекламних форм і форм сайту автоматично реєструються на вебінар; зіставлення «форма → кімната» налаштовується в адмінці без коду.</li>
+          <li>Нагадування по email і в Telegram-боті; реєстрація через бота за deep link працює навіть без email, на десктопі — QR-код.</li>
+          <li>Усі ліди потрапляють у CRM.</li></ul></dd></div>
+        <div><dt>Результат</dt><dd>75 реєстрацій на перший вебінар, 79 з 79 тестів рушія.</dd></div>
+      </dl>
+    </article>
+
+    <ul class="also">
+      <li><b>Інцидент зі спамом у формах:</b> 1 593 сміттєві ліди за 2,5 години; сканер заблоковано, 1 621 з 1 623 лідів перемічено в CRM через API.</li>
+      <li><b>Аудит якості лідів з реклами:</b> 8% кваліфікованих і жодної оплати; нова форма з питанням-фільтром і нове таргетування.</li>
+      <li><b>Аналітика лідогенерації через REST API CRM:</b> динаміка рік до року з відсіюванням «шуму» від масових заходів.</li>
+      <li><b>GA4:</b> окрема група каналів для трафіку з AI-асистентів через Admin API.</li>
+      <li><b>Монітор нормативних змін:</b> кілька разів на день перевіряє джерела, фільтрує за темами й надсилає дайджест у Telegram.</li>
+    </ul>
+  </section>
+
+  <section class="block" id="data" aria-labelledby="data-h">
+    <div class="block-head"><div class="eyebrow">Дані</div>
+      <h2 id="data-h">Інтеграції B2B-продукту, звірка й контроль</h2></div>
+
+    <article class="case">
+      <aside><h3>Інтеграції та звірка даних</h3>
         <div class="tags"><span>REST API</span><span>SQL</span><span>ClickHouse</span><span>Superset</span></div></aside>
       <dl>
-        <div><dt>Задача</dt><dd>Програмний продукт для медичної галузі обмінюється даними із зовнішніми системами партнерів і клієнтів. Записи губляться або розходяться між системами замовлень, виконання та оплат.</dd></div>
+        <div><dt>Задача</dt><dd>Програмний продукт для медичного сегменту обмінюється даними з системами партнерів; записи губляться або розходяться між системами замовлень, виконання й оплат.</dd></div>
         <div><dt>Що зроблено</dt><dd><ul>
-          <li>Специфікації інтеграцій із зовнішніми API (приймання замовлень, передача результатів, системи партнерів), відповіді розробникам клієнтів щодо контракту API.</li>
-          <li>Звірка даних між системами: де і чому губляться записи; висновки для бізнесу.</li>
-          <li>Розслідування інцидентів на живих даних (SQL, ClickHouse, дашборди Superset), аналіз впливу перед оновленнями й міграціями.</li>
-          <li>AI-агенти для рутини команди: нотатки зустрічей і чатів перетворюються на задачі в CRM, щоденні перевірки, генерація звітів.</li>
-        </ul></dd></div>
+          <li>Специфікації інтеграцій із зовнішніми API, відповіді розробникам клієнтів щодо контракту API.</li>
+          <li>Звірка даних між системами й розслідування інцидентів на живих даних, аналіз впливу перед міграціями.</li>
+          <li>AI-агенти для рутини команди: нотатки зустрічей → задачі в CRM, щоденні перевірки, звіти.</li></ul></dd></div>
         <div><dt>Роль</dt><dd>Аналітик впровадження та інтеграцій, з 2022 року.</dd></div>
       </dl>
     </article>
+
+    <article class="case">
+      <aside><h3>Монітор синхронізації з автовиправленням</h3>
+        <div class="tags"><span>Python</span><span>SQL</span><span>Telegram</span></div></aside>
+      <dl>
+        <div><dt>Що робить</dt><dd>Дві перевірки кожні 30 хвилин шукають записи, що не дійшли між системами, різниця приходить у Telegram; окреме завдання саме переносить «застряглі» записи.</dd></div>
+        <div><dt>Результат</dt><dd>Близько 43% таких випадків закривається автоматично.</dd></div>
+      </dl>
+    </article>
+
+    <ul class="also">
+      <li><b>Фото документа → чернетка замовлення:</b> прототип OCR + зіставлення з каталогом, з позначками «уточнити» замість вгадування; на синтетичних прикладах 28 з 28 полів і 25 з 25 позицій, ~30 с на документ.</li>
+      <li><b>Щомісячний KPI-дашборд</b> у Superset замість ручних вивантажень.</li>
+      <li><b>Автоекспорт звітів</b> ClickHouse → Superset API → xlsx, по файлу на кожну пару «організація × тип ціни».</li>
+    </ul>
   </section>
 
   <section class="nda" aria-labelledby="nda-h">
