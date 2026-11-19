@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Олександр Салацький — автоматизація CRM, Telegram та AI-асистенти з затвердженням людиною. Інтерактивне демо і кейси.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px;font-family:system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Олександр Салацький — автоматизація CRM і AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: narrow reading column; the live demo (chat + event log) opens the page as the thesis, cases follow as a plain list. */
+:root{
+  --bg:#F3F5F4; --surface:#FFFFFF; --fg:#16211E; --muted:#5A6B66; --line:#D9E0DD;
+  --accent:#0E6B60; --accent-fg:#FFFFFF; --accent-soft:#DCEDEA;
+  --wait:#9A5B00; --wait-soft:#FBEBD2; --bubble:#E9EEEC; --bot:#FFFFFF;
+  --f-display:"Unbounded","IBM Plex Sans",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#101615; --surface:#172120; --fg:#E4ECE9; --muted:#97A8A3; --line:#2A3735;
+  --accent:#4FC1B1; --accent-fg:#06201C; --accent-soft:#16332F;
+  --wait:#F0B45A; --wait-soft:#3A2A12; --bubble:#1E2A28; --bot:#1B2725; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101615; --surface:#172120; --fg:#E4ECE9; --muted:#97A8A3; --line:#2A3735;
+  --accent:#4FC1B1; --accent-fg:#06201C; --accent-soft:#16332F;
+  --wait:#F0B45A; --wait-soft:#3A2A12; --bubble:#1E2A28; --bot:#1B2725; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body);margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-block:40px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:56px}
+h1,h2,h3{font-family:var(--f-display);font-weight:500;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:clamp(26px,4.4vw,38px)}
+h2{font-size:22px}
+h3{font-size:17px;font-weight:600}
+p{margin:0;max-width:66ch}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+header{display:grid;gap:14px}
+.lead{font-size:18px;color:var(--fg)}
+.contact{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;color:var(--muted);font-size:15px}
+.contact a{color:var(--accent);font-weight:600;text-decoration:none;border-bottom:1px solid currentColor}
+.contact a:focus-visible,button:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* demo */
+.demo{display:grid;gap:16px}
+.demo-head{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:end}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{font:500 14px var(--f-body);padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.stage{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px}
+@media (max-width:760px){.stage{grid-template-columns:minmax(0,1fr)}}
+.chat{background:var(--surface);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;min-height:440px;min-width:0}
+.chat-top{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.ava{width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;font:600 13px var(--f-mono)}
+.chat-top b{font-weight:600;font-size:15px}
+.chat-top span{display:block;font-size:12px;color:var(--muted)}
+.msgs{flex:1;padding:16px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;max-height:520px}
+.msg{max-width:92%;padding:10px 12px;border-radius:12px;background:var(--bubble);font-size:14.5px;line-height:1.5;white-space:pre-wrap;animation:in .25s ease-out}
+.msg.me{align-self:flex-end;background:var(--accent-soft)}
+.msg .card{display:grid;gap:2px;margin-top:6px;padding:8px 10px;border-left:3px solid var(--accent);background:var(--surface);border-radius:6px;font-size:13.5px}
+.msg .meta{font:12px var(--f-mono);color:var(--muted)}
+.pill{display:inline-block;font:500 11.5px var(--f-mono);padding:2px 8px;border-radius:999px;background:var(--wait-soft);color:var(--wait);margin-bottom:4px}
+.pill.ok{background:var(--accent-soft);color:var(--accent)}
+.btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.btns button{font:500 13.5px var(--f-body);padding:7px 11px;border-radius:8px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer}
+.btns button.primary{background:var(--accent);color:var(--accent-fg)}
+.btns button:disabled{opacity:.45;cursor:default}
+.typing{font-size:13px;color:var(--muted);font-style:italic}
+textarea{width:100%;min-height:110px;font:14px/1.5 var(--f-body);padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);margin-top:6px}
+.log{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.log ol{list-style:none;margin:0;padding:0;display:grid;gap:6px;font:12.5px/1.45 var(--f-mono);overflow-x:auto}
+.log li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;font-variant-numeric:tabular-nums}
+.log li time{color:var(--muted)}
+.log li.gate span{color:var(--wait)}
+.log li.done span{color:var(--accent)}
+.note{font-size:13px;color:var(--muted)}
+.reset{align-self:flex-start;font:500 13px var(--f-body);background:none;border:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:0}
+
+/* cases */
+.cases{display:grid;gap:28px}
+.case{display:grid;grid-template-columns:200px minmax(0,1fr);gap:8px 32px;padding-top:24px;border-top:1px solid var(--line)}
+@media (max-width:700px){.case{grid-template-columns:minmax(0,1fr)}}
+.case aside{display:grid;gap:8px;align-content:start}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font:12px var(--f-mono);padding:2px 8px;border:1px solid var(--line);border-radius:6px;color:var(--muted)}
+.case dl{margin:0;display:grid;gap:10px}
+.case dt{font:500 12px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.case dd{margin:0;max-width:66ch}
+.case ul{margin:4px 0 0;padding-left:18px;display:grid;gap:4px}
+.nda{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;gap:12px}
+.nda ul{margin:0;padding-left:18px;display:grid;gap:6px;max-width:70ch}
+footer{color:var(--muted);font-size:14px;display:grid;gap:6px}
+@keyframes in{from{transform:translateY(4px);opacity:.4}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.msg{animation:none}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Портфоліо · автоматизація та інтеграції</div>
+    <h1>Олександр Салацький</h1>
+    <p class="lead">Зв'язую інструменти, якими команда вже користується (CRM, пошту, Telegram, таблиці), і додаю AI там, де він справді економить час. Усе важливе перед відправкою затверджує людина.</p>
+    <div class="contact">
+      <span>Telegram: <a href="https://t.me/aleksander1sk" target="_blank" rel="noopener">@aleksander1sk</a></span>
+      <span>Node.js · Python · React · SQL · Bitrix24 REST · Telegram Bot API · LLM</span>
+    </div>
+  </header>
+
+  <section class="demo" aria-labelledby="demo-h">
+    <div class="demo-head">
+      <div style="display:grid;gap:6px">
+        <div class="eyebrow">Інтерактивне демо</div>
+        <h2 id="demo-h">CRM і пошта → Telegram з AI-чернеткою та затвердженням</h2>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Сценарій">
+        <button class="tab" role="tab" id="tab-task" aria-selected="true" data-s="task">Задача з CRM</button>
+        <button class="tab" role="tab" id="tab-mail" aria-selected="false" data-s="mail">Лист від клієнта</button>
+      </div>
+    </div>
+    <p class="note">Так працює рішення з кейсу 1. Демо зібране окремо, на вигаданих даних: компанії, люди й номери не справжні. Натискайте кнопки в чаті, праворуч видно, що відбувається в системі.</p>
+    <div class="stage">
+      <div class="chat">
+        <div class="chat-top"><div class="ava">AI</div><div><b>Робочий асистент</b><span>бот команди · демо</span></div></div>
+        <div class="msgs" id="msgs" aria-live="polite"></div>
+      </div>
+      <div class="log">
+        <div class="eyebrow">Журнал подій</div>
+        <ol id="log"></ol>
+        <button class="reset" id="reset" type="button">Почати спочатку</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="cases" aria-labelledby="cases-h">
+    <div style="display:grid;gap:6px">
+      <div class="eyebrow">Кейси</div>
+      <h2 id="cases-h">Що я будував</h2>
+    </div>
+
+    <article class="case">
+      <aside><div class="eyebrow">Кейс 1</div><h3>Inbox CRM у Telegram з AI-виконавцем</h3>
+        <div class="tags"><span>Bitrix24 REST</span><span>Telegram Bot API</span><span>LLM</span><span>Node.js</span></div></aside>
+      <dl>
+        <div><dt>Задача</dt><dd>Задачі, згадки й повідомлення розкидані між CRM, поштою та чатами. Власник пропускає важливе і витрачає час на рутинні відповіді.</dd></div>
+        <div><dt>Що зроблено</dt><dd><ul>
+          <li>Нові задачі, згадки, особисті повідомлення та чати задач із Bitrix24 приходять у Telegram-бота з кнопками дій.</li>
+          <li>Відкладена публікація повідомлень.</li>
+          <li>Черга AI-виконавця: агент готує роботу в ізольованому середовищі, власник переглядає її в боті й затверджує. Без затвердження нічого не надсилається.</li>
+        </ul></dd></div>
+        <div><dt>Для кого</dt><dd>Внутрішній інструмент компанії B2B-послуг.</dd></div>
+      </dl>
+    </article>
+
+    <article class="case">
+      <aside><div class="eyebrow">Кейс 2</div><h3>Модульний внутрішній портал</h3>
+        <div class="tags"><span>React</span><span>Express</span><span>SQLite</span><span>JWT</span><span>Python</span></div></aside>
+      <dl>
+        <div><dt>Задача</dt><dd>Кілька розрізнених утиліт команди треба було зібрати в одне місце з доступом за ролями.</dd></div>
+        <div><dt>Що зроблено</dt><dd><ul>
+          <li>Портал на React + Express: JWT-авторизація, адмінка з ролями, окрема база для кожного модуля.</li>
+          <li>Маршрутизація пошти в Telegram, дашборди статистики листів, інтеграція з сервісом розсилок.</li>
+          <li>Автоматичний SEO-аудит сайту (Python).</li>
+          <li>Розгортання на власному сервері в приватній мережі: регламентні задачі за розкладом, логування.</li>
+        </ul></dd></div>
+      </dl>
+    </article>
+
+    <article class="case">
+      <aside><div class="eyebrow">Кейс 3</div><h3>Інтеграції та звірка даних у B2B-продукті</h3>
+        <div class="tags"><span>REST API</span><span>SQL</span><span>ClickHouse</span><span>Superset</span></div></aside>
+      <dl>
+        <div><dt>Задача</dt><dd>Програмний продукт для медичної галузі обмінюється даними із зовнішніми системами партнерів і клієнтів. Записи губляться або розходяться між системами замовлень, виконання та оплат.</dd></div>
+        <div><dt>Що зроблено</dt><dd><ul>
+          <li>Специфікації інтеграцій із зовнішніми API (приймання замовлень, передача результатів, системи партнерів), відповіді розробникам клієнтів щодо контракту API.</li>
+          <li>Звірка даних між системами: де і чому губляться записи; висновки для бізнесу.</li>
+          <li>Розслідування інцидентів на живих даних (SQL, ClickHouse, дашборди Superset), аналіз впливу перед оновленнями й міграціями.</li>
+          <li>AI-агенти для рутини команди: нотатки зустрічей і чатів перетворюються на задачі в CRM, щоденні перевірки, генерація звітів.</li>
+        </ul></dd></div>
+        <div><dt>Роль</dt><dd>Аналітик впровадження та інтеграцій, з 2022 року.</dd></div>
+      </dl>
+    </article>
+  </section>
+
+  <section class="nda" aria-labelledby="nda-h">
+    <div class="eyebrow">Про NDA</div>
+    <h2 id="nda-h">Чому тут немає скриншотів і коду</h2>
+    <p>Код, інтерфейси й дані належать компаніям, для яких я працюю. Тому показую так:</p>
+    <ul>
+      <li>Демо вище зібране з нуля на вигаданих даних і повторює логіку рішення, а не його код.</li>
+      <li>На дзвінку розповім архітектуру будь-якого кейсу: які системи, як іде потік даних, де затвердження, як обробляються збої.</li>
+      <li>Найкраща перевірка — невелике тестове завдання або перший оплачуваний етап з обсягом, погодженим заздалегідь.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div>Напишіть у Telegram <a href="https://t.me/aleksander1sk" target="_blank" rel="noopener" style="color:var(--accent)">@aleksander1sk</a>, що треба зв'язати, і я відповім планом та оцінкою.</div>
+    <div>Усі імена, компанії й номери в демо вигадані.</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const S = {
+    task: {
+      start: [{log:"crm.webhook  task.add #2318", cls:""}],
+      first: {text:"Нова задача з CRM", card:["Задача #2318 · Підготувати комерційну пропозицію","Клієнт: ТОВ «Зелений склад» (демо)","Поставив: Ірина, відділ продажів · строк: завтра 12:00"], btns:[["draft","Підготувати чернетку з AI",true],["open","Відкрити в CRM"]]},
+      draftLog:"ai.draft  created · status: needs_approval",
+      draft:"Добрий день, Андрію!\n\nДякуємо за запит. Надсилаємо пропозицію на складське зберігання: 120 палетомісць, від 1 грудня, договір на 6 місяців. Ціна та умови — у вкладенні.\n\nЯкщо зручно, обговоримо деталі в четвер о 15:00.",
+      sentLog:["email.send  to: client (demo)","crm.comment.add  task #2318 · КП надіслано"],
+      sentText:"Надіслано клієнту. У задачу #2318 додано коментар із текстом листа.",
+      open:"У справжньому рішенні тут відкривається картка задачі в CRM."
+    },
+    mail: {
+      start: [{log:"mail.inbound  from: client (demo)", cls:""},{log:"ai.classify  intent: invoice_question", cls:""}],
+      first: {text:"Новий лист від клієнта", card:["Від: бухгалтерія ФОП Коваль (демо)","Тема: Не бачимо оплату за рахунком №774","Короткий зміст (AI): клієнт оплатив 14.11, просить підтвердити надходження"], btns:[["draft","Підготувати відповідь",true],["open","Створити задачу в CRM"]]},
+      draftLog:"ai.draft  reply created · status: needs_approval",
+      draft:"Добрий день!\n\nОплату за рахунком №774 отримали 15.11, дякуємо. Закриваючі документи надішлемо до кінця тижня.\n\nЗ повагою, відділ обслуговування",
+      sentLog:["email.send  reply (demo)","crm.activity.add  лист і відповідь прив'язано до клієнта"],
+      sentText:"Відповідь надіслано. Лист і відповідь прив'язано до картки клієнта в CRM.",
+      open:"Створено задачу «Перевірити оплату за рахунком №774» для бухгалтерії (демо)."
+    }
+  };
+  let cur = "task", t0, timers = [];
+  const msgs = document.getElementById("msgs"), log = document.getElementById("log");
+  const clock = () => { const d = new Date(t0 + (Date.now() - t0) * 1); return d.toTimeString().slice(0,8); };
+  function addLog(text, cls){ const li=document.createElement("li"); if(cls) li.className=cls; li.innerHTML="<time></time><span></span>"; li.firstChild.textContent=clock(); li.lastChild.textContent=text; log.appendChild(li); }
+  function addMsg(build, me){ const m=document.createElement("div"); m.className="msg"+(me?" me":""); build(m); msgs.appendChild(m); msgs.scrollTop=msgs.scrollHeight; return m; }
+  function buttons(parent, list){ const b=document.createElement("div"); b.className="btns";
+    list.forEach(([id,label,primary])=>{ const x=document.createElement("button"); x.type="button"; x.textContent=label; if(primary) x.className="primary"; x.dataset.act=id; b.appendChild(x); });
+    parent.appendChild(b); return b; }
+  function lock(b){ b.querySelectorAll("button").forEach(x=>x.disabled=true); }
+  function later(fn, ms){ timers.push(setTimeout(fn, ms)); }
+  function you(text){ addMsg(m=>{ m.textContent=text; }, true); }
+
+  function start(){
+    timers.forEach(clearTimeout); timers=[]; msgs.innerHTML=""; log.innerHTML=""; t0=Date.now();
+    const s=S[cur];
+    s.start.forEach(e=>addLog(e.log,e.cls));
+    addMsg(m=>{
+      const head=document.createElement("div"); head.textContent=s.first.text; m.appendChild(head);
+      const c=document.createElement("div"); c.className="card";
+      s.first.card.forEach((line,i)=>{ const d=document.createElement("div"); d.textContent=line; if(i>0) d.className="meta"; c.appendChild(d); });
+      m.appendChild(c);
+      const b=buttons(m, s.first.btns);
+      b.addEventListener("click", e=>{ const a=e.target.dataset.act; if(!a) return; lock(b);
+        if(a==="draft"){ you(e.target.textContent); draft(); }
+        else { you(e.target.textContent); addLog("crm.open  (demo)"); later(()=>addMsg(m=>{ m.textContent=s.open; buttons(m,[["again","Почати спочатку"]]).addEventListener("click",start); }),400); }
+      });
+    });
+  }
+  function draft(text){
+    const s=S[cur];
+    const ty=addMsg(m=>{ m.className="msg typing"; m.textContent="асистент готує чернетку…"; });
+    later(()=>{
+      ty.remove(); addLog(s.draftLog,"gate");
+      addMsg(m=>{
+        const p=document.createElement("span"); p.className="pill"; p.textContent="чекає на ваше затвердження"; m.appendChild(p);
+        const body=document.createElement("div"); body.textContent=text||s.draft; m.appendChild(body);
+        const b=buttons(m,[["ok","Затвердити й надіслати",true],["edit","Змінити"],["no","Відхилити"]]);
+        b.addEventListener("click", e=>{ const a=e.target.dataset.act; if(!a) return; lock(b); you(e.target.textContent);
+          if(a==="ok"){ addLog("owner.approve","done"); s.sentLog.forEach((l,i)=>later(()=>addLog(l,"done"),250*(i+1)));
+            later(()=>addMsg(m=>{ const p=document.createElement("span"); p.className="pill ok"; p.textContent="виконано"; m.appendChild(p); const d=document.createElement("div"); d.textContent=s.sentText; m.appendChild(d); }),700); }
+          else if(a==="no"){ addLog("owner.reject · нічого не надіслано","gate"); later(()=>addMsg(m=>{ m.textContent="Чернетку відхилено. Нічого не надіслано."; }),300); }
+          else { edit(body.textContent); }
+        });
+      });
+    }, 900);
+  }
+  function edit(text){
+    addMsg(m=>{
+      const l=document.createElement("label"); l.htmlFor="ed"; l.textContent="Виправте текст і збережіть:"; m.appendChild(l);
+      const ta=document.createElement("textarea"); ta.id="ed"; ta.value=text; m.appendChild(ta);
+      const b=buttons(m,[["save","Зберегти",true]]);
+      b.addEventListener("click", ()=>{ lock(b); ta.disabled=true; addLog("owner.edit  draft updated","gate"); draft(ta.value); });
+    });
+  }
+  document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
+    cur=t.dataset.s; document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected", String(x===t))); start(); }));
+  document.getElementById("reset").addEventListener("click", start);
+  start();
+})();
+</script>
+</body>
+</html>
